@@ -179,21 +179,53 @@ The exposed backup contained 30 staff records (names, contact details, national 
 
 ## 🖼️ Evidence Gallery
 
-1. **Target confirmation** — Mediroza General Hospital homepage.
-2. **MGH-01** — Raw SQL syntax error from the login form.
-3. **MGH-02** — The `admin' --` payload entered.
-4. **MGH-02 (result)** — Successful bypass into the patient portal.
-5. **MGH-03** — Patient PDFs listed and downloadable.
-6. **MGH-04** — Downloaded encrypted PDFs on disk.
-7. **MGH-04 (cracking)** — Weak passwords recovered via wordlist attack.
-8. **MGH-04 (John the Ripper)** — Stronger password cracked for the third PDF.
-9. **Unlocked PDF content** — Confirming real patient data inside the reports.
-10. **MGH-05** — ExifTool output showing the `j.malik` comment.
-11. **MGH-06** — Directory listing of `/old/` exposing the backup file.
-12. **MGH-07 (schema)** — `CREATE TABLE` structure for staff and shareholders.
-13. **MGH-07 (data, redacted)** — Staff and shareholder records with national IDs redacted.
-14. **Compiled tables** — Final organized Word document of recovered data.
 
+
+### MGH-01 — SQL Injection Error
+![SQL injection error](docs/evidence/mgh01-sql-injection-error.png)
+*Patient Portal login page returning a raw MySQL syntax error after a single quote was submitted.*
+
+### MGH-02 — SQL Injection Payload
+![SQL injection payload](docs/evidence/mgh02-sql-injection-payload.png)
+*The `admin' --` username payload entered into the login form.*
+
+### MGH-02 — Successful Login Bypass
+![Login bypass success](docs/evidence/mgh02-login-bypass-success.png)
+*The patient portal accessed successfully with no valid credentials.*
+
+### MGH-03 — Patient Report Access
+![Patient report access](docs/evidence/mgh03-patient-report-access.png)
+*Three patient pathology reports listed and downloadable from the portal.*
+
+### MGH-04 — Weak PDF Passwords
+![Weak PDF password 1](docs/evidence/mgh04-weak-pdf-password.png)
+![Weak PDF password 2](docs/evidence/mgh04-weak-pdf2-password.png)
+*Password-cracking output showing the first two PDF passwords recovered almost instantly.*
+
+### MGH-04 — John the Ripper Cracking Result
+![John the Ripper crack](docs/evidence/mgh04-john-the-ripper-crack.png)
+*John the Ripper recovering the third PDF's stronger password after the common-password list failed.*
+
+### MGH-05 — Sensitive PDF Metadata
+![Sensitive PDF metadata](docs/evidence/mgh05-sensitive-pdf-metadata.png)
+*ExifTool output revealing an internal staff comment referencing a database backup location.*
+
+### MGH-06 — Directory Listing Exposing Backup
+![Directory listing backup](docs/evidence/mgh06-directory-listing-backup.png)
+*Directory listing of `/old/` showing the database backup file publicly accessible.*
+
+### MGH-07 — Database Schema
+![Database schema](docs/evidence/mgh07-database-schema.png)
+![Database schema 2](docs/evidence/mgh07-database2-schema.png)
+![Database schema 3](docs/evidence/mgh07-database3-schema.png)
+![Database schema 4](docs/evidence/mgh07-database4-schema.png)
+*Table structure of the exposed backup, showing the `staff` and `shareholders` tables in full.*
+
+### MGH-07 — Database Records (Redacted)
+![Database records redacted 1](docs/evidence/mgh07-database-records-redacted.png)
+![Database records redacted 2](docs/evidence/mgh07-database2-records-redacted.png)
+![Database records redacted 3](docs/evidence/mgh07-database3-records-redacted.png)
+*Staff and shareholder data recovered from the backup, with national ID numbers redacted.*
 ---
 
 ## 🔗 Attack Chain Walkthrough
