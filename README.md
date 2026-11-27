@@ -99,6 +99,9 @@ The patient login form placed user-controlled input directly into a database que
 
 **Recommendation:** Replace dynamic query construction with parameterized queries or prepared statements. Disable raw database error output in production.
 
+**Evidence placeholder**
+![SQL injection error](docs/evidence/mgh01-sql-injection-error.png)
+
 ---
 
 ### MGH-02 — Successful Authentication Bypass
@@ -108,6 +111,10 @@ The patient login form placed user-controlled input directly into a database que
 Using the payload `admin' --` as the username (with any password), a fully authenticated session was obtained on the patient portal without valid credentials.
 
 **Recommendation:** Same as MGH-01. Add explicit server-side authentication checks rather than trusting any non-empty query result as proof of login.
+
+**Evidence placeholder**
+![SQL injection payload](docs/evidence/mgh02-sql-injection-payload.png)
+![Login bypass success](docs/evidence/mgh02-login-bypass-success.png)
 
 ---
 
@@ -119,6 +126,9 @@ Once inside the portal, three downloadable, password-protected lab report PDFs w
 
 **Recommendation:** Store files outside the web root and deliver them only through per-patient, server-side authorization checks.
 
+**Evidence placeholder**
+![Patient report access](docs/evidence/mgh03-patient-report-access.png)
+
 ---
 
 ### MGH-04 — Weak PDF Passwords Crackable with a Wordlist and John the Ripper
@@ -129,6 +139,10 @@ Two of the three PDFs were decrypted instantly using common weak passwords (`123
 
 **Recommendation:** Enforce long, unpredictable passwords if document-level protection is kept at all. Rely on server-side access control, not PDF passwords, as the real security boundary.
 
+**Evidence placeholder**
+![Weak PDF password 1](docs/evidence/mgh04-weak-pdf-password.png)
+![Weak PDF password 2](docs/evidence/mgh04-weak-pdf2-password.png)
+![John the Ripper crack](docs/evidence/mgh04-john-the-ripper-crack.png)
 ---
 
 ### MGH-05 — Internal Note Exposed in PDF Metadata
@@ -139,6 +153,9 @@ Metadata inspection with ExifTool revealed a hidden internal comment (author: `j
 
 **Recommendation:** Strip all metadata from documents before they are distributed externally. Internal notes should never travel inside patient-facing files.
 
+**Evidence placeholder**
+![Sensitive PDF metadata](docs/evidence/mgh05-sensitive-pdf-metadata.png)
+
 ---
 
 ### MGH-06 — Unauthenticated Access to Exposed Backup Directory
@@ -148,6 +165,9 @@ Metadata inspection with ExifTool revealed a hidden internal comment (author: `j
 The internal comment in MGH-05 led directly to `/old/`, which was reachable and had directory listing enabled — exposing a full database backup file to anyone with no login required.
 
 **Recommendation:** Disable directory listing on the web server. Store backups outside the web root entirely.
+
+**Evidence placeholder**
+![Directory listing backup](docs/evidence/mgh06-directory-listing-backup.png)
 
 ---
 
@@ -160,6 +180,12 @@ The exposed backup contained 30 staff records (names, contact details, national 
 *This README intentionally summarizes the exposure rather than reproducing the sensitive records.*
 
 **Recommendation:** Remove the publicly accessible backup immediately. Store backups in access-controlled, encrypted storage. Review backup retention policy and treat this as a reportable data breach under POPIA.
+
+**Evidence placeholder**
+![Database schema](docs/evidence/mgh07-database-schema.png)
+![Database schema 2](docs/evidence/mgh07-database2-schema.png)
+![Database schema 3](docs/evidence/mgh07-database3-schema.png)
+![Database schema 4](docs/evidence/mgh07-database4-schema.png)
 
 ---
 
@@ -189,6 +215,8 @@ The exposed backup contained 30 staff records (names, contact details, national 
 ### MGH-02 — SQL Injection Payload
 ![SQL injection payload](docs/evidence/mgh02-sql-injection-payload.png)
 *The `admin' --` username payload entered into the login form.*
+
+### Index of patient
 
 ### MGH-02 — Successful Login Bypass
 ![Login bypass success](docs/evidence/mgh02-login-bypass-success.png)
@@ -226,7 +254,7 @@ The exposed backup contained 30 staff records (names, contact details, national 
 ![Database records redacted 1](docs/evidence/mgh07-database-records-redacted.png)
 ![Database records redacted 2](docs/evidence/mgh07-database2-records-redacted.png)
 ![Database records redacted 3](docs/evidence/mgh07-database3-records-redacted.png)
-*Staff and shareholder data recovered from the backup, with national ID numbers redacted.*
+
 ---
 
 ## 🔗 Attack Chain Walkthrough
