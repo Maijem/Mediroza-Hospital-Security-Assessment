@@ -179,7 +179,8 @@ The exposed backup contained 30 staff records (names, contact details, national 
 
 ## 🖼️ Evidence Gallery
 
-
+### Target confirmation — Homepage
+![Homepage](docs/evidence/Mediroza-General-Hospital-homepage.png)
 
 ### MGH-01 — SQL Injection Error
 ![SQL injection error](docs/evidence/mgh01-sql-injection-error.png)
