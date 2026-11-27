@@ -187,6 +187,36 @@ The exposed backup contained 30 staff records (names, contact details, national 
 ![Database schema 3](docs/evidence/mgh07-database3-schema.png)
 ![Database schema 4](docs/evidence/mgh07-database4-schema.png)
 
+
+## 🔗 Attack Chain Walkthrough
+
+1. `patient/login.php` returned a raw MySQL error, confirming SQL injection (**MGH-01**).
+2. The `admin' --` payload bypassed login entirely (**MGH-02**).
+3. Three confidential patient PDFs became accessible in the portal (**MGH-03**).
+4. Two PDFs were cracked instantly with weak passwords; the third required John the Ripper (**MGH-04**).
+5. Metadata in the third PDF revealed a staff comment pointing to `/old` (**MGH-05**).
+6. The `/old/` directory was publicly listed, exposing a database backup (**MGH-06**).
+7. The backup revealed full staff and shareholder records in plain text (**MGH-07**).
+
+```
+SQL Injection → Login Bypass → Patient PDFs → Weak PDF Passwords
+    → PDF Metadata Leak → Exposed Backup Directory → Full Database Exposure
+```
+
+---
+
+## 💣 Impact
+
+If exploited outside the controlled environment, this chain could enable an unauthenticated attacker to:
+
+- Bypass authentication entirely and access the patient portal without any valid account.
+- Download confidential patient lab/pathology reports belonging to named individuals.
+- Recover the contents of password-protected medical documents using freely available tools.
+- Discover internal infrastructure details through metadata left in a patient-facing document.
+- Retrieve a complete, unprotected database backup containing staff PII, salaries, and shareholder ownership data.
+
+🏛️ **Regulatory exposure:** Given the hospital's South African context, this incident would likely qualify as a reportable data breach under POPIA, given the exposure of health records, national ID numbers, and financial information.
+
 ---
 
 ## 🚦 Remediation Priorities
@@ -217,6 +247,7 @@ The exposed backup contained 30 staff records (names, contact details, national 
 *The `admin' --` username payload entered into the login form.*
 
 ### Index of patient
+![Index of patient](docs/evidence/Index-of-patient.png)
 
 ### MGH-02 — Successful Login Bypass
 ![Login bypass success](docs/evidence/mgh02-login-bypass-success.png)
@@ -225,6 +256,15 @@ The exposed backup contained 30 staff records (names, contact details, national 
 ### MGH-03 — Patient Report Access
 ![Patient report access](docs/evidence/mgh03-patient-report-access.png)
 *Three patient pathology reports listed and downloadable from the portal.*
+
+### Pathology Laboratory Report  — Sipho Dlamini
+![Pathology Laboratory Report](docs/evidence/pathology-laboratory-report-Sipho-Dlamini.png)
+
+### Pathology Laboratory Report  — Priya Reddy
+![Pathology Laboratory Report](docs/evidence/pathology-laboratory-report-Priya-Reddy.png)
+
+### Pathology Laboratory Report  — Emily Thompson
+![Pathology Laboratory Report](docs/evidence/pathology-laboratory-report-Emily-Thompson.png)
 
 ### MGH-04 — Weak PDF Passwords
 ![Weak PDF password 1](docs/evidence/mgh04-weak-pdf-password.png)
@@ -254,37 +294,6 @@ The exposed backup contained 30 staff records (names, contact details, national 
 ![Database records redacted 1](docs/evidence/mgh07-database-records-redacted.png)
 ![Database records redacted 2](docs/evidence/mgh07-database2-records-redacted.png)
 ![Database records redacted 3](docs/evidence/mgh07-database3-records-redacted.png)
-
----
-
-## 🔗 Attack Chain Walkthrough
-
-1. `patient/login.php` returned a raw MySQL error, confirming SQL injection (**MGH-01**).
-2. The `admin' --` payload bypassed login entirely (**MGH-02**).
-3. Three confidential patient PDFs became accessible in the portal (**MGH-03**).
-4. Two PDFs were cracked instantly with weak passwords; the third required John the Ripper (**MGH-04**).
-5. Metadata in the third PDF revealed a staff comment pointing to `/old` (**MGH-05**).
-6. The `/old/` directory was publicly listed, exposing a database backup (**MGH-06**).
-7. The backup revealed full staff and shareholder records in plain text (**MGH-07**).
-
-```
-SQL Injection → Login Bypass → Patient PDFs → Weak PDF Passwords
-    → PDF Metadata Leak → Exposed Backup Directory → Full Database Exposure
-```
-
----
-
-## 💣 Impact
-
-If exploited outside the controlled environment, this chain could enable an unauthenticated attacker to:
-
-- Bypass authentication entirely and access the patient portal without any valid account.
-- Download confidential patient lab/pathology reports belonging to named individuals.
-- Recover the contents of password-protected medical documents using freely available tools.
-- Discover internal infrastructure details through metadata left in a patient-facing document.
-- Retrieve a complete, unprotected database backup containing staff PII, salaries, and shareholder ownership data.
-
-🏛️ **Regulatory exposure:** Given the hospital's South African context, this incident would likely qualify as a reportable data breach under POPIA, given the exposure of health records, national ID numbers, and financial information.
 
 ---
 
