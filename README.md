@@ -295,6 +295,24 @@ If exploited outside the controlled environment, this chain could enable an unau
 ![Database records redacted 2](docs/evidence/mgh07-database2-records-redacted.png)
 ![Database records redacted 3](docs/evidence/mgh07-database3-records-redacted.png)
 
+| Evidence | File |
+|---|---|
+| Target confirmation — Homepage | `docs/evidence/Mediroza-General-Hospital-homepage.png` |
+| MGH-01 — SQL injection error | `docs/evidence/mgh01-sql-injection-error.png` |
+| MGH-02 — SQL injection payload | `docs/evidence/mgh02-sql-injection-payload.png` |
+| Index of /patient/ directory | `docs/evidence/Index-of-patient.png` |
+| MGH-02 — Successful login bypass | `docs/evidence/mgh02-login-bypass-success.png` |
+| MGH-03 — Patient report access | `docs/evidence/mgh03-patient-report-access.png` |
+| Pathology Report — Sipho Dlamini | `docs/evidence/pathology-laboratory-report-Sipho-Dlamini.png` |
+| Pathology Report — Priya Reddy | `docs/evidence/pathology-laboratory-report-Priya-Reddy.png` |
+| Pathology Report — Emily Thompson | `docs/evidence/pathology-laboratory-report-Emily-Thompson.png` |
+| MGH-04 — Weak PDF passwords | `docs/evidence/mgh04-weak-pdf-password.png`, `mgh04-weak-pdf2-password.png` |
+| MGH-04 — John the Ripper cracking result | `docs/evidence/mgh04-john-the-ripper-crack.png` |
+| MGH-05 — Sensitive PDF metadata | `docs/evidence/mgh05-sensitive-pdf-metadata.png` |
+| MGH-06 — Directory listing exposing backup | `docs/evidence/mgh06-directory-listing-backup.png` |
+| MGH-07 — Database schema | `docs/evidence/mgh07-database-schema.png` (+2, 3, 4) |
+| MGH-07 — Database records (redacted) | `docs/evidence/mgh07-database-records-redacted.png` (+2, 3) |
+
 ---
 
 ## 💡 Lessons Learned
