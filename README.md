@@ -315,6 +315,14 @@ If exploited outside the controlled environment, this chain could enable an unau
 
 ---
 
+---
+
+## 📄 Full Report
+
+[Mediroza Penetration Testing Report.pdf](Mediroza%20Penetration%20Testing%20Report.pdf)
+
+---
+
 ## 💡 Lessons Learned
 
 - A single unsanitized input field was enough to break authentication entirely.
