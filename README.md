@@ -1,4 +1,4 @@
-# 🏥 Mediroza General Hospital — Web Application Security Review
+# 🏥 Mediroza General Hospital — Web Application Penetration Testing
 ### Networkwalks B084 | Week 4 Capstone Project
 
 **A black-box penetration test from an unauthenticated attacker's perspective**
